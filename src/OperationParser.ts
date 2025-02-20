@@ -52,7 +52,7 @@ export class DefaultOperationParser implements IOperationParser {
     value(operation: OpenAPIV3.OperationObject, context: OperationContext): string {
         let name = this.name(operation, context)
         // replace all non-alphanumeric characters with '-'
-        return name.replace(/[^a-zA-Z0-9]/g, '-');
+        return name.replace(/[^a-zA-Z0-9 ]/g, '-');
     }
 
     action(operation: OpenAPIV3.OperationObject, context: OperationContext): string {
