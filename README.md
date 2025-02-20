@@ -73,7 +73,7 @@ yarn add @devlikeapro/n8n-openapi-node
 2. Get your `Node.properties` from OpenAPI v3 spec:
 
 ```typescript
-import {INodeType, INodeTypeDescription} from 'n8n-workflow';
+import {INodeType, INodeTypeDescription, NodeConnectionType} from 'n8n-workflow';
 import {N8NPropertiesBuilder, N8NPropertiesBuilderConfig} from '@devlikeapro/n8n-openapi-node';
 import * as doc from './openapi.json'; // <=== Your OpenAPI v3 spec
 
