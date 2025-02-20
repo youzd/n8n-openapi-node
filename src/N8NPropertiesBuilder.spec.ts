@@ -35,7 +35,7 @@ export class CustomResourceParser extends DefaultResourceParser {
     }
 }
 
-test('query param', () => {
+test('query param - schema', () => {
     const paths = {
         '/api/entities': {
             get: {
@@ -142,6 +142,162 @@ test('query param', () => {
                 },
             },
         },
+    ]);
+});
+
+test('query param - content', () => {
+    const paths = {
+        '/api/entities': {
+            get: {
+                operationId: 'EntityController_list',
+                summary: 'List all entities',
+                parameters: [
+                    {
+                        name: 'filter',
+                        required: false,
+                        in: 'query',
+                        example: false,
+                        description: 'Filter description',
+                        content: {
+                            'application/json': {
+                                schema: {
+                                    $ref: '#/components/schemas/Entity',
+                                },
+                            },
+                        }
+                    },
+                ],
+                tags: ['🖥️ Entity'],
+            },
+        },
+    };
+    const components = {
+        schemas: {
+            Entity: {
+                type: 'object',
+                properties: {
+                    name: {
+                        type: 'string',
+                        maxLength: 54,
+                        example: 'default',
+                        description: 'Entity name',
+                    },
+                    start: {
+                        type: 'boolean',
+                        description: 'Boolean flag description',
+                        example: true,
+                        default: true,
+                    },
+                    config: {
+                        $ref: '#/components/schemas/EntityConfig',
+                    },
+                },
+                required: ['name'],
+            },
+            EntityConfig: {
+                type: 'object',
+                properties: {
+                    foo: {
+                        type: 'string',
+                        example: 'bar',
+                    },
+                },
+            },
+        },
+    };
+
+    const parser = new N8NPropertiesBuilder({paths, components}, {
+        operation: new CustomOperationParser(),
+        resource: new CustomResourceParser(),
+    });
+    const result = parser.build()
+
+    expect(result).toEqual([
+        {
+            "default": "",
+            "displayName": "Resource",
+            "name": "resource",
+            "noDataExpression": true,
+            "options": [
+                {
+                    "description": "",
+                    "name": "🖥️ Entity",
+                    "value": "Entity"
+                }
+            ],
+            "type": "options"
+        },
+        {
+            "default": "",
+            "displayName": "Operation",
+            "displayOptions": {
+                "show": {
+                    "resource": [
+                        "Entity"
+                    ]
+                }
+            },
+            "name": "operation",
+            "noDataExpression": true,
+            "options": [
+                {
+                    "action": "List all entities",
+                    "description": "List all entities",
+                    "name": "List",
+                    "routing": {
+                        "request": {
+                            "method": "GET",
+                            "url": "=/api/entities"
+                        }
+                    },
+                    "value": "List"
+                }
+            ],
+            "type": "options"
+        },
+        {
+            "default": "",
+            "displayName": "GET /api/entities",
+            "displayOptions": {
+                "show": {
+                    "operation": [
+                        "List"
+                    ],
+                    "resource": [
+                        "Entity"
+                    ]
+                }
+            },
+            "name": "operation",
+            "type": "notice",
+            "typeOptions": {
+                "theme": "info"
+            }
+        },
+        {
+            "default": false,
+            "description": "Filter description",
+            "displayName": "Filter",
+            "displayOptions": {
+                "show": {
+                    "operation": [
+                        "List"
+                    ],
+                    "resource": [
+                        "Entity"
+                    ]
+                }
+            },
+            "name": "filter",
+            "routing": {
+                "request": {
+                    "qs": {
+                        "filter": "={{ $value }}"
+                    }
+                }
+            },
+            "type": "json"
+        }
     ]);
 });
 

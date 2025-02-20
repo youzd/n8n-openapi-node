@@ -88,7 +88,18 @@ export class N8NINodeProperties {
 
     fromParameter(parameter: OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject): INodeProperties {
         parameter = this.refResolver.resolve<OpenAPIV3.ParameterObject>(parameter)
-        const fieldSchemaKeys: FromSchemaNodeProperty = this.fromSchema(parameter.schema!!);
+        let fieldSchemaKeys
+        if (parameter.schema) {
+            fieldSchemaKeys = this.fromSchema(parameter.schema!!);
+        }
+        if (!fieldSchemaKeys) {
+            const regexp = /application\/json.*/
+            const content = findKey(parameter.content, regexp)
+            fieldSchemaKeys = this.fromSchema(content.schema);
+        }
+        if (!fieldSchemaKeys) {
+            throw new Error(`Parameter schema nor content not found`)
+        }
         const fieldParameterKeys: Partial<INodeProperties> = {
             displayName: lodash.startCase(parameter.name),
             name: parameter.name,
