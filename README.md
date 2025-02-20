@@ -88,8 +88,8 @@ export class Petstore implements INodeType {
     defaults: {
       name: 'Petstore',
     },
-    inputs: ['main'],
-    outputs: ['main'],
+    inputs: [NodeConnectionType.Main],
+    outputs: [NodeConnectionType.Main],
     credentials: [
       {
         name: 'petstoreApi',
