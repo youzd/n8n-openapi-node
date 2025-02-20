@@ -43,11 +43,16 @@ export class DefaultOperationParser implements IOperationParser {
     }
 
     name(operation: OpenAPIV3.OperationObject, context: OperationContext): string {
-        return lodash.startCase(operation.operationId)
+        if (operation.operationId) {
+            return lodash.startCase(operation.operationId)
+        }
+        return context.method.toUpperCase() + " " + context.pattern
     }
 
     value(operation: OpenAPIV3.OperationObject, context: OperationContext): string {
-        return lodash.startCase(operation.operationId)
+        let name = this.name(operation, context)
+        // replace all non-alphanumeric characters with '-'
+        return name.replace(/[^a-zA-Z0-9]/g, '-');
     }
 
     action(operation: OpenAPIV3.OperationObject, context: OperationContext): string {
