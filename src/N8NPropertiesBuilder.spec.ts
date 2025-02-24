@@ -391,7 +391,7 @@ test('query param - dot in field name', () => {
         },
         {
             displayName: 'Filter All',
-            name: 'filter.all',
+            name: 'filter-all',
             type: 'boolean',
             displayOptions: {
                 show: {

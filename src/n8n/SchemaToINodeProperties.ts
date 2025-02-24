@@ -102,7 +102,7 @@ export class N8NINodeProperties {
         }
         const fieldParameterKeys: Partial<INodeProperties> = {
             displayName: lodash.startCase(parameter.name),
-            name: parameter.name,
+            name: parameter.name.replace(".", "-"),
             required: parameter.required,
             description: parameter.description,
             default: parameter.example,
@@ -157,7 +157,7 @@ export class N8NINodeProperties {
         const fieldSchemaKeys: FromSchemaNodeProperty = this.fromSchema(property)
         const fieldParameterKeys: Partial<INodeProperties> = {
             displayName: lodash.startCase(name),
-            name: name,
+            name: name.replace(".", "-"),
         }
         const field = combine(fieldParameterKeys, fieldSchemaKeys)
         return field
