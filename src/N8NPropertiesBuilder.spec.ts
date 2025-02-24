@@ -618,10 +618,11 @@ test('request body', () => {
                 },
             },
             routing: {
-                request: {
-                    body: {
-                        name: '={{ $value }}',
-                    },
+                "send": {
+                    "property": "name",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 },
             },
         },
@@ -640,10 +641,11 @@ test('request body', () => {
                 },
             },
             routing: {
-                request: {
-                    body: {
-                        start: '={{ $value }}',
-                    },
+                "send": {
+                    "property": "start",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 },
             },
         },
@@ -660,10 +662,11 @@ test('request body', () => {
             default: JSON.stringify({foo: 'bar'}, null, 2),
             required: undefined,
             routing: {
-                request: {
-                    body: {
-                        config: '={{ JSON.parse($value) }}',
-                    },
+                "send": {
+                    "property": "config",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ JSON.parse($value) }}"
                 },
             },
         },
@@ -771,10 +774,11 @@ test('enum schema', () => {
                 },
             },
             routing: {
-                request: {
-                    body: {
-                        type: '={{ $value }}',
-                    },
+                "send": {
+                    "property": "type",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 },
             },
         },
@@ -1014,10 +1018,11 @@ test('test overrides', () => {
                 },
             },
             routing: {
-                request: {
-                    body: {
-                        name: '={{ $value }}',
-                    },
+                "send": {
+                    "property": "name",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 },
             },
         },
@@ -1036,10 +1041,11 @@ test('test overrides', () => {
                 },
             },
             routing: {
-                request: {
-                    body: {
-                        start: '={{ $value }}',
-                    },
+                "send": {
+                    "property": "start",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 },
             },
         },
@@ -1056,10 +1062,11 @@ test('test overrides', () => {
             default: "={{ $json.config }}",
             required: undefined,
             routing: {
-                request: {
-                    body: {
-                        config: '={{ JSON.parse($value) }}',
-                    },
+                "send": {
+                    "property": "config",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ JSON.parse($value) }}"
                 },
             },
         },

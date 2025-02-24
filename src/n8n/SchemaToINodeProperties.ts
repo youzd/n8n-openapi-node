@@ -206,18 +206,20 @@ export class N8NINodeProperties {
             const field = combine(fieldDefaults, fieldPropertyKeys)
             if (field.type === 'json') {
                 field.routing = {
-                    request: {
-                        body: {
-                            [key]: '={{ JSON.parse($value) }}',
-                        },
+                    send: {
+                        "property": key,
+                        "propertyInDotNotation": false,
+                        "type": "body",
+                        "value": '={{ JSON.parse($value) }}'
                     },
                 };
             } else {
                 field.routing = {
-                    request: {
-                        body: {
-                            [key]: '={{ $value }}',
-                        },
+                    send: {
+                        "property": key,
+                        "propertyInDotNotation": false,
+                        "type": "body",
+                        "value": '={{ $value }}'
                     },
                 };
             }
