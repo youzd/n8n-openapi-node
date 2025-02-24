@@ -311,7 +311,7 @@ test('query param - dot in field name', () => {
                 summary: 'List all entities',
                 parameters: [
                     {
-                        name: 'filter.all',
+                        name: 'filter.entities.all',
                         required: false,
                         in: 'query',
                         example: false,
@@ -390,8 +390,8 @@ test('query param - dot in field name', () => {
             },
         },
         {
-            displayName: 'Filter All',
-            name: 'filter-all',
+            displayName: 'Filter Entities All',
+            name: 'filter-entities-all',
             type: 'boolean',
             displayOptions: {
                 show: {
@@ -404,7 +404,7 @@ test('query param - dot in field name', () => {
             description: 'Boolean flag description',
             routing: {
                 "send": {
-                    "property": "filter.all",
+                    "property": "filter.entities.all",
                     "propertyInDotNotation": false,
                     "type": "query",
                     "value": "={{ $value }}"
