@@ -342,10 +342,11 @@ test('petstore.json', () => {
             },
             "name": "id",
             "routing": {
-                "request": {
-                    "body": {
-                        "id": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "id",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "number"
@@ -366,10 +367,11 @@ test('petstore.json', () => {
             "name": "name",
             "required": true,
             "routing": {
-                "request": {
-                    "body": {
-                        "name": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "name",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -389,10 +391,11 @@ test('petstore.json', () => {
             },
             "name": "category",
             "routing": {
-                "request": {
-                    "body": {
-                        "category": "={{ JSON.parse($value) }}"
-                    }
+                "send": {
+                    "property": "category",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ JSON.parse($value) }}"
                 }
             },
             "type": "json"
@@ -413,10 +416,11 @@ test('petstore.json', () => {
             "name": "photoUrls",
             "required": true,
             "routing": {
-                "request": {
-                    "body": {
-                        "photoUrls": "={{ JSON.parse($value) }}"
-                    }
+                "send": {
+                    "property": "photoUrls",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ JSON.parse($value) }}"
                 }
             },
             "type": "json"
@@ -436,10 +440,11 @@ test('petstore.json', () => {
             },
             "name": "tags",
             "routing": {
-                "request": {
-                    "body": {
-                        "tags": "={{ JSON.parse($value) }}"
-                    }
+                "send": {
+                    "property": "tags",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ JSON.parse($value) }}"
                 }
             },
             "type": "json"
@@ -474,10 +479,11 @@ test('petstore.json', () => {
                 }
             ],
             "routing": {
-                "request": {
-                    "body": {
-                        "status": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "status",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "options"
@@ -516,10 +522,11 @@ test('petstore.json', () => {
             },
             "name": "id",
             "routing": {
-                "request": {
-                    "body": {
-                        "id": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "id",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "number"
@@ -540,10 +547,11 @@ test('petstore.json', () => {
             "name": "name",
             "required": true,
             "routing": {
-                "request": {
-                    "body": {
-                        "name": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "name",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -563,10 +571,11 @@ test('petstore.json', () => {
             },
             "name": "category",
             "routing": {
-                "request": {
-                    "body": {
-                        "category": "={{ JSON.parse($value) }}"
-                    }
+                "send": {
+                    "property": "category",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ JSON.parse($value) }}"
                 }
             },
             "type": "json"
@@ -587,10 +596,11 @@ test('petstore.json', () => {
             "name": "photoUrls",
             "required": true,
             "routing": {
-                "request": {
-                    "body": {
-                        "photoUrls": "={{ JSON.parse($value) }}"
-                    }
+                "send": {
+                    "property": "photoUrls",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ JSON.parse($value) }}"
                 }
             },
             "type": "json"
@@ -610,10 +620,11 @@ test('petstore.json', () => {
             },
             "name": "tags",
             "routing": {
-                "request": {
-                    "body": {
-                        "tags": "={{ JSON.parse($value) }}"
-                    }
+                "send": {
+                    "property": "tags",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ JSON.parse($value) }}"
                 }
             },
             "type": "json"
@@ -648,10 +659,11 @@ test('petstore.json', () => {
                 }
             ],
             "routing": {
-                "request": {
-                    "body": {
-                        "status": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "status",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "options"
@@ -705,10 +717,11 @@ test('petstore.json', () => {
                 }
             ],
             "routing": {
-                "request": {
-                    "qs": {
-                        "status": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "status",
+                    "propertyInDotNotation": false,
+                    "type": "query",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "options"
@@ -748,10 +761,11 @@ test('petstore.json', () => {
             },
             "name": "tags",
             "routing": {
-                "request": {
-                    "qs": {
-                        "tags": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "tags",
+                    "propertyInDotNotation": false,
+                    "type": "query",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "json"
@@ -846,10 +860,11 @@ test('petstore.json', () => {
             },
             "name": "name",
             "routing": {
-                "request": {
-                    "qs": {
-                        "name": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "name",
+                    "propertyInDotNotation": false,
+                    "type": "query",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -870,10 +885,11 @@ test('petstore.json', () => {
             },
             "name": "status",
             "routing": {
-                "request": {
-                    "qs": {
-                        "status": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "status",
+                    "propertyInDotNotation": false,
+                    "type": "query",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -992,10 +1008,11 @@ test('petstore.json', () => {
             },
             "name": "additionalMetadata",
             "routing": {
-                "request": {
-                    "qs": {
-                        "additionalMetadata": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "additionalMetadata",
+                    "propertyInDotNotation": false,
+                    "type": "query",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1069,10 +1086,11 @@ test('petstore.json', () => {
             },
             "name": "id",
             "routing": {
-                "request": {
-                    "body": {
-                        "id": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "id",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "number"
@@ -1092,10 +1110,11 @@ test('petstore.json', () => {
             },
             "name": "petId",
             "routing": {
-                "request": {
-                    "body": {
-                        "petId": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "petId",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "number"
@@ -1115,10 +1134,11 @@ test('petstore.json', () => {
             },
             "name": "quantity",
             "routing": {
-                "request": {
-                    "body": {
-                        "quantity": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "quantity",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "number"
@@ -1138,10 +1158,11 @@ test('petstore.json', () => {
             },
             "name": "shipDate",
             "routing": {
-                "request": {
-                    "body": {
-                        "shipDate": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "shipDate",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1176,10 +1197,11 @@ test('petstore.json', () => {
                 }
             ],
             "routing": {
-                "request": {
-                    "body": {
-                        "status": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "status",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "options"
@@ -1199,10 +1221,11 @@ test('petstore.json', () => {
             },
             "name": "complete",
             "routing": {
-                "request": {
-                    "body": {
-                        "complete": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "complete",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "boolean"
@@ -1315,10 +1338,11 @@ test('petstore.json', () => {
             },
             "name": "id",
             "routing": {
-                "request": {
-                    "body": {
-                        "id": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "id",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "number"
@@ -1338,10 +1362,11 @@ test('petstore.json', () => {
             },
             "name": "username",
             "routing": {
-                "request": {
-                    "body": {
-                        "username": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "username",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1361,10 +1386,11 @@ test('petstore.json', () => {
             },
             "name": "firstName",
             "routing": {
-                "request": {
-                    "body": {
-                        "firstName": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "firstName",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1384,10 +1410,11 @@ test('petstore.json', () => {
             },
             "name": "lastName",
             "routing": {
-                "request": {
-                    "body": {
-                        "lastName": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "lastName",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1407,10 +1434,11 @@ test('petstore.json', () => {
             },
             "name": "email",
             "routing": {
-                "request": {
-                    "body": {
-                        "email": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "email",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1430,10 +1458,11 @@ test('petstore.json', () => {
             },
             "name": "password",
             "routing": {
-                "request": {
-                    "body": {
-                        "password": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "password",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1453,10 +1482,11 @@ test('petstore.json', () => {
             },
             "name": "phone",
             "routing": {
-                "request": {
-                    "body": {
-                        "phone": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "phone",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1477,10 +1507,11 @@ test('petstore.json', () => {
             },
             "name": "userStatus",
             "routing": {
-                "request": {
-                    "body": {
-                        "userStatus": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "userStatus",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "number"
@@ -1560,10 +1591,11 @@ test('petstore.json', () => {
             },
             "name": "username",
             "routing": {
-                "request": {
-                    "qs": {
-                        "username": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "username",
+                    "propertyInDotNotation": false,
+                    "type": "query",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1584,10 +1616,11 @@ test('petstore.json', () => {
             },
             "name": "password",
             "routing": {
-                "request": {
-                    "qs": {
-                        "password": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "password",
+                    "propertyInDotNotation": false,
+                    "type": "query",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1700,10 +1733,11 @@ test('petstore.json', () => {
             },
             "name": "id",
             "routing": {
-                "request": {
-                    "body": {
-                        "id": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "id",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "number"
@@ -1723,10 +1757,11 @@ test('petstore.json', () => {
             },
             "name": "username",
             "routing": {
-                "request": {
-                    "body": {
-                        "username": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "username",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1746,10 +1781,11 @@ test('petstore.json', () => {
             },
             "name": "firstName",
             "routing": {
-                "request": {
-                    "body": {
-                        "firstName": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "firstName",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1769,10 +1805,11 @@ test('petstore.json', () => {
             },
             "name": "lastName",
             "routing": {
-                "request": {
-                    "body": {
-                        "lastName": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "lastName",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1792,10 +1829,11 @@ test('petstore.json', () => {
             },
             "name": "email",
             "routing": {
-                "request": {
-                    "body": {
-                        "email": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "email",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1815,10 +1853,11 @@ test('petstore.json', () => {
             },
             "name": "password",
             "routing": {
-                "request": {
-                    "body": {
-                        "password": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "password",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1838,10 +1877,11 @@ test('petstore.json', () => {
             },
             "name": "phone",
             "routing": {
-                "request": {
-                    "body": {
-                        "phone": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "phone",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "string"
@@ -1862,10 +1902,11 @@ test('petstore.json', () => {
             },
             "name": "userStatus",
             "routing": {
-                "request": {
-                    "body": {
-                        "userStatus": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "userStatus",
+                    "propertyInDotNotation": false,
+                    "type": "body",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "number"
