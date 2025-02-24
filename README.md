@@ -1,9 +1,14 @@
 # @devlikeapro/n8n-openapi-node
 
-Turn Your **OpenAPI** (**Swagger**) spec into a **n8n node**!
 
 ![openapi logo](openapi.png)
 ![n8n logo](n8n.png)
+
+Turn Your **OpenAPI** (**Swagger**) spec into a **n8n node**!
+
+[![npm version](https://img.shields.io/npm/v/@devlikeapro/n8n-openapi-node.svg)](https://www.npmjs.com/package/@devlikeapro/n8n-openapi-node)
+
+---
 
 <!-- toc -->
 
@@ -68,7 +73,7 @@ yarn add @devlikeapro/n8n-openapi-node
 2. Get your `Node.properties` from OpenAPI v3 spec:
 
 ```typescript
-import {INodeType, INodeTypeDescription} from 'n8n-workflow';
+import {INodeType, INodeTypeDescription, NodeConnectionType} from 'n8n-workflow';
 import {N8NPropertiesBuilder, N8NPropertiesBuilderConfig} from '@devlikeapro/n8n-openapi-node';
 import * as doc from './openapi.json'; // <=== Your OpenAPI v3 spec
 
