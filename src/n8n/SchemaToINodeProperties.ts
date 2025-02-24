@@ -112,10 +112,11 @@ export class N8NINodeProperties {
         switch (parameter.in) {
             case "query":
                 field.routing = {
-                    request: {
-                        qs: {
-                            [parameter.name]: '={{ $value }}',
-                        },
+                    send: {
+                        type: 'query',
+                        property: parameter.name,
+                        value: '={{ $value }}',
+                        propertyInDotNotation: false,
                     },
                 };
                 break;

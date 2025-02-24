@@ -135,11 +135,12 @@ test('query param - schema', () => {
             // eslint-disable-next-line n8n-nodes-base/node-param-description-boolean-without-whether
             description: 'Boolean flag description',
             routing: {
-                request: {
-                    qs: {
-                        all: '={{ $value }}',
-                    },
-                },
+                "send": {
+                    "property": "all",
+                    "propertyInDotNotation": false,
+                    "type": "query",
+                    "value": "={{ $value }}"
+                }
             },
         },
     ]);
@@ -290,14 +291,126 @@ test('query param - content', () => {
             },
             "name": "filter",
             "routing": {
-                "request": {
-                    "qs": {
-                        "filter": "={{ $value }}"
-                    }
+                "send": {
+                    "property": "filter",
+                    "propertyInDotNotation": false,
+                    "type": "query",
+                    "value": "={{ $value }}"
                 }
             },
             "type": "json"
         }
+    ]);
+});
+
+test('query param - dot in field name', () => {
+    const paths = {
+        '/api/entities': {
+            get: {
+                operationId: 'EntityController_list',
+                summary: 'List all entities',
+                parameters: [
+                    {
+                        name: 'filter.all',
+                        required: false,
+                        in: 'query',
+                        example: false,
+                        description: 'Boolean flag description',
+                        schema: {
+                            type: 'boolean',
+                        },
+                    },
+                ],
+                tags: ['🖥️ Entity'],
+            },
+        },
+    };
+
+    const parser = new N8NPropertiesBuilder({paths}, {
+        operation: new CustomOperationParser(),
+        resource: new CustomResourceParser(),
+    });
+    const result = parser.build()
+
+    expect(result).toEqual([
+        {
+            "default": "",
+            "displayName": "Resource",
+            "name": "resource",
+            "noDataExpression": true,
+            "options": [
+                {
+                    "description": "",
+                    "name": "🖥️ Entity",
+                    "value": "Entity"
+                }
+            ],
+            "type": "options"
+        },
+        {
+            displayName: 'Operation',
+            name: 'operation',
+            type: 'options',
+            noDataExpression: true,
+            displayOptions: {
+                show: {
+                    resource: ['Entity'],
+                },
+            },
+            options: [
+                {
+                    name: 'List',
+                    value: 'List',
+                    action: 'List all entities',
+                    description: 'List all entities',
+                    routing: {
+                        request: {
+                            method: 'GET',
+                            url: '=/api/entities',
+                        },
+                    },
+                },
+            ],
+            // eslint-disable-next-line
+            default: '',
+        },
+        {
+            displayName: 'GET /api/entities',
+            default: '',
+            displayOptions: {
+                show: {
+                    operation: ['List'],
+                    resource: ['Entity'],
+                },
+            },
+            name: 'operation',
+            type: 'notice',
+            typeOptions: {
+                theme: 'info',
+            },
+        },
+        {
+            displayName: 'Filter All',
+            name: 'filter.all',
+            type: 'boolean',
+            displayOptions: {
+                show: {
+                    resource: ['Entity'],
+                    operation: ['List'],
+                },
+            },
+            default: false,
+            // eslint-disable-next-line n8n-nodes-base/node-param-description-boolean-without-whether
+            description: 'Boolean flag description',
+            routing: {
+                "send": {
+                    "property": "filter.all",
+                    "propertyInDotNotation": false,
+                    "type": "query",
+                    "value": "={{ $value }}"
+                }
+            },
+        },
     ]);
 });
 
@@ -1097,11 +1210,12 @@ test('multiple tags', () => {
                 },
                 "name": "all",
                 "routing": {
-                    "request": {
-                        "qs": {
-                            "all": "={{ $value }}"
-                        }
-                    }
+                    "send": {
+                        "property": "all",
+                        "propertyInDotNotation": false,
+                        "type": "query",
+                        "value": "={{ $value }}"
+                    },
                 },
                 "type": "boolean"
             },
@@ -1140,11 +1254,12 @@ test('multiple tags', () => {
                 },
                 "name": "all",
                 "routing": {
-                    "request": {
-                        "qs": {
-                            "all": "={{ $value }}"
-                        }
-                    }
+                    "send": {
+                        "property": "all",
+                        "propertyInDotNotation": false,
+                        "type": "query",
+                        "value": "={{ $value }}"
+                    },
                 },
                 "type": "boolean"
             }
@@ -1260,11 +1375,12 @@ test('no tags - default tag', () => {
                 },
                 "name": "all",
                 "routing": {
-                    "request": {
-                        "qs": {
-                            "all": "={{ $value }}"
-                        }
-                    }
+                    "send": {
+                        "property": "all",
+                        "propertyInDotNotation": false,
+                        "type": "query",
+                        "value": "={{ $value }}"
+                    },
                 },
                 "type": "boolean"
             }
