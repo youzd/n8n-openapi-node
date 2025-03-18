@@ -31,6 +31,7 @@ Turn Your **OpenAPI** (**Swagger**) spec into a **n8n node**!
   * [I have openapi.yaml spec, what can I do?](#i-have-openapiyaml-spec-what-can-i-do)
   * [How to set up credentials from OpenAPI v3 spec?](#how-to-set-up-credentials-from-openapi-v3-spec)
   * [Why it doesn't work with my OpenAPI spec?](#why-it-doesnt-work-with-my-openapi-spec)
+- [Support the project](#support-the-project)
 
 <!-- tocstop -->
 
@@ -374,4 +375,8 @@ for an example.
 Open [a new issue](https://github.com/devlikeapro/n8n-openapi-node/issues) and please attach
 your openapi.json file and describe the problem (logs are helpful too).
 
+# Support the project
 
+You can support the project by donating a small amount to help us improve the project even more.
+
+- [https://patreon.com/devlikeapro](https://patreon.com/devlikeapro)
