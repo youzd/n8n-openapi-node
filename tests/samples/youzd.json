@@ -1,0 +1,98 @@
+{
+    "openapi": "3.0.0",
+    "components": {
+        "examples": {},
+        "headers": {},
+        "parameters": {},
+        "requestBodies": {},
+        "responses": {},
+        "schemas": {
+            "ProductInput": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "4 seater convertible sofa",
+                        "minLength": 10,
+                        "maxLength": 50,
+                        "pattern": "^[^\u003C\u003E;=#{}]*$"
+                    },
+                    "brand": {
+                        "type": "string",
+                        "description": "Brand of the product"
+                    }
+                },
+                "required": [
+                    "title"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            }
+        },
+        "securitySchemes": {
+            "bearer": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "jwt",
+                "description": "please look at the authentication route of this api for details on how to generate an access token"
+            }
+        }
+    },
+    "info": {
+        "title": "api",
+        "version": "1.0.0",
+        "description": "Minimal api with optional parameters",
+        "license": {
+            "name": "MIT"
+        },
+        "contact": {}
+    },
+    "paths": {
+        "/catalog": {
+            "post": {
+                "operationId": "CreateProduct",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "id"
+                                    ],
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Create a new product",
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductInput"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "/api/v1"
+        }
+    ]
+}
