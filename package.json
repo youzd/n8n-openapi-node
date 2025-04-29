@@ -2,11 +2,12 @@
   "name": "@youzd/n8n-openapi-node",
   "version": "0.1.4",
   "description": "Turn OpenAPI specs into n8n node",
-  "main": "dist/src/index.js",
-  "module": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc --project tsconfig-dist.json",
     "test": "jest"
   },
   "repository": {
@@ -24,8 +25,8 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/src/index.js",
-      "require": "./dist/src/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
     }
   },
   "files": [
