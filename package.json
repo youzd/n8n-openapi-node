@@ -30,7 +30,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "homepage": "https://github.com/youzd/n8n-openapi-node#readme",
   "devDependencies": {
