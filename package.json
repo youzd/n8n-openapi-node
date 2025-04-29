@@ -31,7 +31,9 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "tsconfig.jon",
+    "tsconfig-dist.json"
   ],
   "homepage": "https://github.com/youzd/n8n-openapi-node#readme",
   "devDependencies": {
