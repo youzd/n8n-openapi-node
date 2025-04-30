@@ -7,6 +7,39 @@
         "requestBodies": {},
         "responses": {},
         "schemas": {
+            "Advantage": {
+                "description": "Possible values :<br />\n<br />\n<dl>\n<dt>usedLessThan14Days</dt>\n<dd>Product returned within 14 days after purchase </dd>\n<dt>refurbished</dt>\n<dd>Refurbished products</dd>\n<dt>neverUnpacked</dt><dd>Product that has not been used because it was refused at delivery (damaged) or was never delivered because lost and found, any product that has never been used nor fixed if it was damaged</dd>\n</dl>",
+                "enum": [
+                    "usedLessThan14Days",
+                    "neverUnpacked",
+                    "refurbished"
+                ],
+                "type": "string"
+            },
+            "ColorName": {
+                "description": "At least one and up to three colors can be specified on a product. They should be sorted in order of importance on the product.",
+                "enum": [
+                    "Noir",
+                    "Blanc",
+                    "Beige",
+                    "Gris",
+                    "Rouge",
+                    "Rose",
+                    "Orange",
+                    "Jaune",
+                    "Vert",
+                    "Bleu",
+                    "Violet",
+                    "Marron",
+                    "Bois clair",
+                    "Bois foncé",
+                    "Transparent",
+                    "Cuivré",
+                    "Argenté",
+                    "Doré"
+                ],
+                "type": "string"
+            },
             "ProductInput": {
                 "properties": {
                     "title": {
@@ -19,6 +52,28 @@
                     "brand": {
                         "type": "string",
                         "description": "Brand of the product"
+                    },
+                    "advantage": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Advantage"
+                            }
+                        ],
+                        "nullable": true
+                    },
+                    "colors": {
+                        "items": {
+                            "$ref": "#/components/schemas/ColorName"
+                        },
+                        "type": "array"
+                    },
+                    "photos": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "description": "Urls of photos for the product. These urls need to be puvblic to allow downloading the photos.",
+                        "minItems": 2
                     }
                 },
                 "required": [

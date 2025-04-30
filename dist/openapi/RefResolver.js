@@ -59,12 +59,19 @@ class RefResolver {
             return [object, refsFlat];
         }
         // @ts-ignore
-        if ('$ref' in schema) {
-            const schemaResolved = this.findRef(schema['$ref']);
+        if ("$ref" in schema) {
+            const schemaResolved = this.findRef(schema["$ref"]);
             // Remove $ref from schema, add all other properties
             const { $ref, ...rest } = schema;
             Object.assign(rest, schemaResolved);
             return [rest, [$ref]];
+        }
+        if (schema && typeof schema === "object" && "type" in schema && schema.type === "array" && "items" in schema) {
+            const { items, ...rest } = schema;
+            const itemsSchema = this.resolveRef(items)[0];
+            // Remove $ref from schema, add all other properties
+            const object = Object.assign({ items: itemsSchema }, rest);
+            return [object, undefined];
         }
         return [schema, undefined];
     }
@@ -72,7 +79,7 @@ class RefResolver {
         return this.resolveRef(schema)[0];
     }
     findRef(ref) {
-        const refPath = ref.split('/').slice(1);
+        const refPath = ref.split("/").slice(1);
         let schema = this.doc;
         for (const path of refPath) {
             // @ts-ignore
@@ -81,8 +88,8 @@ class RefResolver {
                 throw new Error(`Schema not found for ref '${ref}'`);
             }
         }
-        if ('$ref' in schema) {
-            return this.findRef(schema['$ref']);
+        if ("$ref" in schema) {
+            return this.findRef(schema["$ref"]);
         }
         return schema;
     }

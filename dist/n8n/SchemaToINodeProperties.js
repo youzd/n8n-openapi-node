@@ -53,9 +53,13 @@ class N8NINodeProperties {
         this.schemaExample = new SchemaExample_1.SchemaExample(doc);
     }
     fromSchema(schema) {
+        var _a, _b;
         schema = this.refResolver.resolve(schema);
         let type;
         let defaultValue = this.schemaExample.extractExample(schema);
+        let typeOptions = undefined;
+        let options = undefined;
+        let description = schema.description;
         switch (schema.type) {
             case "boolean":
                 type = "boolean";
@@ -67,12 +71,43 @@ class N8NINodeProperties {
                 defaultValue = defaultValue !== undefined ? defaultValue : "";
                 break;
             case "object":
-                type = "json";
+                const values = [];
+                if (schema.properties) {
+                    for (const name in schema.properties) {
+                        values.push({
+                            name,
+                            displayName: name,
+                            type: "string", //TODO : this whould be mapped from schema...
+                            default: undefined,
+                        });
+                    }
+                }
+                type = "fixedCollection";
+                options = [
+                    {
+                        name: ((_a = schema.xml) === null || _a === void 0 ? void 0 : _a.name) || "values",
+                        displayName: ((_b = schema.xml) === null || _b === void 0 ? void 0 : _b.name) || "",
+                        values,
+                    },
+                ];
                 defaultValue = defaultValue !== undefined ? JSON.stringify(defaultValue, null, 2) : "{}";
                 break;
             case "array":
-                type = "json";
-                defaultValue = defaultValue !== undefined ? JSON.stringify(defaultValue, null, 2) : "[]";
+                const items = this.fromSchema(schema.items);
+                if (items.type === "options") {
+                    type = "multiOptions";
+                    options = items.options;
+                }
+                else {
+                    type = items.type;
+                    options = items.options;
+                    typeOptions = {
+                        multipleValues: true,
+                        multipleValueButtonText: "Add",
+                    };
+                }
+                description = items.description || schema.description;
+                defaultValue = [];
                 break;
             case "number":
             case "integer":
@@ -80,21 +115,23 @@ class N8NINodeProperties {
                 defaultValue = defaultValue !== undefined ? defaultValue : 0;
                 break;
         }
-        const field = {
-            type: type,
-            default: defaultValue,
-            description: schema.description,
-        };
         if (schema.enum && schema.enum.length > 0) {
-            field.type = "options";
-            field.options = schema.enum.map((value) => {
+            type = "options";
+            options = schema.enum.map((value) => {
                 return {
                     name: lodash.startCase(value),
                     value: value,
                 };
             });
-            field.default = field.default ? field.default : schema.enum[0];
+            defaultValue = defaultValue || schema.enum[0];
         }
+        const field = {
+            type,
+            default: defaultValue,
+            ...(description ? { description } : []),
+            ...(typeOptions ? { typeOptions } : {}),
+            ...(options ? { options } : {}),
+        };
         return field;
     }
     fromParameter(parameter) {
@@ -197,7 +234,7 @@ class N8NINodeProperties {
             const field = combine(fieldDefaults, fieldPropertyKeys);
             field.routing = {
                 request: {
-                    body: "={{ JSON.parse($value) }}",
+                    body: "={{ $value }}",
                 },
             };
             (field.required || !useAdditionalFields ? fields : additionnalFieldsOptions).push(field);

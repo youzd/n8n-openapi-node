@@ -1,11 +1,11 @@
 import * as lodash from "lodash";
-import { INodeProperties, NodePropertyTypes } from "n8n-workflow";
+import { INodeProperties, INodePropertyCollection, NodePropertyTypes } from "n8n-workflow";
 import { OpenAPIV3 } from "openapi-types";
 import { RefResolver } from "../openapi/RefResolver";
 import { SchemaExample } from "../openapi/SchemaExample";
 
 type Schema = OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
-type FromSchemaNodeProperty = Pick<INodeProperties, "type" | "default" | "description" | "options">;
+type FromSchemaNodeProperty = Pick<INodeProperties, "type" | "default" | "description" | "options" | "typeOptions">;
 
 function combine(...sources: Partial<INodeProperties>[]): INodeProperties {
     const obj = lodash.defaults({}, ...sources);
@@ -42,7 +42,9 @@ export class N8NINodeProperties {
         schema = this.refResolver.resolve<OpenAPIV3.SchemaObject>(schema);
         let type: NodePropertyTypes;
         let defaultValue = this.schemaExample.extractExample(schema);
-
+        let typeOptions: FromSchemaNodeProperty["typeOptions"] = undefined;
+        let options: FromSchemaNodeProperty["options"] = undefined;
+        let description = schema.description;
         switch (schema.type) {
             case "boolean":
                 type = "boolean";
@@ -54,12 +56,43 @@ export class N8NINodeProperties {
                 defaultValue = defaultValue !== undefined ? defaultValue : "";
                 break;
             case "object":
-                type = "json";
+                const values: INodePropertyCollection["values"] = [];
+                if (schema.properties) {
+                    for (const name in schema.properties) {
+                        values.push({
+                            name,
+                            displayName: name,
+                            type: "string", //TODO : this whould be mapped from schema...
+                            default: undefined,
+                        });
+                    }
+                }
+                type = "fixedCollection";
+                options = [
+                    {
+                        name: schema.xml?.name || "values",
+                        displayName: schema.xml?.name || "",
+                        values,
+                    },
+                ];
                 defaultValue = defaultValue !== undefined ? JSON.stringify(defaultValue, null, 2) : "{}";
                 break;
             case "array":
-                type = "json";
-                defaultValue = defaultValue !== undefined ? JSON.stringify(defaultValue, null, 2) : "[]";
+                const items = this.fromSchema(schema.items);
+                if (items.type === "options") {
+                    type = "multiOptions";
+                    options = items.options;
+                } else {
+                    type = items.type;
+                    options = items.options;
+                    typeOptions = {
+                        multipleValues: true,
+                        multipleValueButtonText: "Add",
+                    };
+                }
+
+                description = items.description || schema.description;
+                defaultValue = [];
                 break;
             case "number":
             case "integer":
@@ -67,22 +100,24 @@ export class N8NINodeProperties {
                 defaultValue = defaultValue !== undefined ? defaultValue : 0;
                 break;
         }
-
-        const field: FromSchemaNodeProperty = {
-            type: type,
-            default: defaultValue,
-            description: schema.description,
-        };
         if (schema.enum && schema.enum.length > 0) {
-            field.type = "options";
-            field.options = schema.enum.map((value: string) => {
+            type = "options";
+            options = schema.enum.map((value: string) => {
                 return {
                     name: lodash.startCase(value),
                     value: value,
                 };
             });
-            field.default = field.default ? field.default : schema.enum[0];
+            defaultValue = defaultValue || schema.enum[0];
         }
+        const field: FromSchemaNodeProperty = {
+            type,
+            default: defaultValue,
+            ...(description ? { description } : []),
+            ...(typeOptions ? { typeOptions } : {}),
+            ...(options ? { options } : {}),
+        };
+
         return field;
     }
 
@@ -157,11 +192,13 @@ export class N8NINodeProperties {
 
     fromSchemaProperty(name: string, property: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject): INodeProperties {
         const fieldSchemaKeys: FromSchemaNodeProperty = this.fromSchema(property);
+
         const fieldParameterKeys: Partial<INodeProperties> = {
             displayName: lodash.startCase(name),
             name: name.replace(/\./g, "-"),
         };
         const field = combine(fieldParameterKeys, fieldSchemaKeys);
+
         return field;
     }
 
@@ -196,7 +233,7 @@ export class N8NINodeProperties {
             const field = combine(fieldDefaults, fieldPropertyKeys);
             field.routing = {
                 request: {
-                    body: "={{ JSON.parse($value) }}",
+                    body: "={{ $value }}",
                 },
             };
             (field.required || !useAdditionalFields ? fields : additionnalFieldsOptions).push(field);
