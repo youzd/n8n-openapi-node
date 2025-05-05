@@ -286,32 +286,6 @@ test("query param - content", () => {
                 },
             },
             name: "filter",
-            options: [
-                {
-                    displayName: "",
-                    name: "values",
-                    values: [
-                        {
-                            default: undefined,
-                            displayName: "name",
-                            name: "name",
-                            type: "string",
-                        },
-                        {
-                            default: undefined,
-                            displayName: "start",
-                            name: "start",
-                            type: "string",
-                        },
-                        {
-                            default: undefined,
-                            displayName: "config",
-                            name: "config",
-                            type: "string",
-                        },
-                    ],
-                },
-            ],
             routing: {
                 send: {
                     property: "filter",
@@ -320,7 +294,7 @@ test("query param - content", () => {
                     value: "={{ $value }}",
                 },
             },
-            type: "fixedCollection",
+            type: "json",
         },
     ]);
 });
@@ -662,6 +636,7 @@ test("request body", () => {
             name: "start",
             type: "boolean",
             default: true,
+            required: undefined,
             // eslint-disable-next-line n8n-nodes-base/node-param-description-boolean-without-whether
             description: "Boolean flag description",
             displayOptions: {
@@ -682,21 +657,7 @@ test("request body", () => {
         {
             displayName: "Config",
             name: "config",
-            type: "fixedCollection",
-            options: [
-                {
-                    displayName: "",
-                    name: "values",
-                    values: [
-                        {
-                            default: undefined,
-                            displayName: "foo",
-                            name: "foo",
-                            type: "string",
-                        },
-                    ],
-                },
-            ],
+            type: "json",
             displayOptions: {
                 show: {
                     resource: ["Entity"],
@@ -704,12 +665,13 @@ test("request body", () => {
                 },
             },
             default: JSON.stringify({ foo: "bar" }, null, 2),
+            required: undefined,
             routing: {
                 send: {
                     property: "config",
                     propertyInDotNotation: false,
                     type: "body",
-                    value: "={{ $value }}",
+                    value: "={{ JSON.parse($value) }}",
                 },
             },
         },
@@ -917,7 +879,7 @@ test('body "array" param', () => {
             name: "body",
             routing: {
                 request: {
-                    body: "={{ $value }}",
+                    body: "={{ JSON.parse($value) }}",
                 },
             },
             type: "string",
@@ -1097,21 +1059,7 @@ test("test overrides", () => {
         {
             displayName: "Config",
             name: "config",
-            options: [
-                {
-                    displayName: "",
-                    name: "values",
-                    values: [
-                        {
-                            default: undefined,
-                            displayName: "foo",
-                            name: "foo",
-                            type: "string",
-                        },
-                    ],
-                },
-            ],
-            type: "fixedCollection",
+            type: "json",
             displayOptions: {
                 show: {
                     resource: ["Entity"],
@@ -1119,12 +1067,13 @@ test("test overrides", () => {
                 },
             },
             default: "={{ $json.config }}",
+            required: undefined,
             routing: {
                 send: {
                     property: "config",
                     propertyInDotNotation: false,
                     type: "body",
-                    value: "={{ $value }}",
+                    value: "={{ JSON.parse($value) }}",
                 },
             },
         },

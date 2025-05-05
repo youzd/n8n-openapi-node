@@ -1,8 +1,10 @@
+import {OpenAPIV3} from "openapi-types";
 import * as lodash from "lodash";
-import { OpenAPIV3 } from "openapi-types";
 
 export class RefResolver {
-    constructor(private doc: any) {}
+    constructor(private doc: any) {
+
+    }
 
     /**
      * Resolve ref and return it if found
@@ -11,17 +13,17 @@ export class RefResolver {
     resolveRef<T>(schema: OpenAPIV3.ReferenceObject | T): [T, string[]?] {
         // @ts-ignore
         if ("properties" in schema) {
-            return [schema as T, undefined];
+            return [schema as T, undefined]
         }
         // @ts-ignore
         if ("oneOf" in schema) {
             // @ts-ignore
-            schema = schema.oneOf[0];
+            schema = schema.oneOf[0]
         }
         // @ts-ignore
         if ("anyOf" in schema) {
             // @ts-ignore
-            schema = schema.anyOf[0];
+            schema = schema.anyOf[0]
         }
         // @ts-ignore
         if ("allOf" in schema) {
@@ -31,32 +33,25 @@ export class RefResolver {
             const refs = results.map((r: any) => r[1]);
             const refsFlat = lodash.flatten<string>(refs);
             const object = Object.assign({}, ...schemas);
-            return [object as T, refsFlat];
+            return [object as T, refsFlat]
         }
         // @ts-ignore
-        if ("$ref" in schema) {
-            const schemaResolved = this.findRef(schema["$ref"]);
+        if ('$ref' in schema) {
+            const schemaResolved = this.findRef(schema['$ref']);
             // Remove $ref from schema, add all other properties
-            const { $ref, ...rest } = schema;
+            const {$ref, ...rest} = schema;
             Object.assign(rest, schemaResolved);
-            return [rest as T, [$ref]];
+            return [rest as T, [$ref]]
         }
-        if (schema && typeof schema === "object" && "type" in schema && schema.type === "array" && "items" in schema) {
-            const { items, ...rest } = schema;
-            const itemsSchema = this.resolveRef(items)[0];
-            // Remove $ref from schema, add all other properties
-            const object = Object.assign({ items: itemsSchema }, rest);
-            return [object as T, undefined];
-        }
-        return [schema as T, undefined];
+        return [schema as T, undefined]
     }
 
     resolve<T>(schema: OpenAPIV3.ReferenceObject | T): T {
-        return this.resolveRef(schema)[0];
+        return this.resolveRef(schema)[0]
     }
 
     private findRef(ref: string): OpenAPIV3.SchemaObject {
-        const refPath = ref.split("/").slice(1);
+        const refPath = ref.split('/').slice(1);
         let schema: any = this.doc;
         for (const path of refPath) {
             // @ts-ignore
@@ -65,8 +60,8 @@ export class RefResolver {
                 throw new Error(`Schema not found for ref '${ref}'`);
             }
         }
-        if ("$ref" in schema) {
-            return this.findRef(schema["$ref"]);
+        if ('$ref' in schema) {
+            return this.findRef(schema['$ref']);
         }
         return schema;
     }

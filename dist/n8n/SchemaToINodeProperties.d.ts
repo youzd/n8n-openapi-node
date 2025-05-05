@@ -1,7 +1,7 @@
 import { INodeProperties } from "n8n-workflow";
 import { OpenAPIV3 } from "openapi-types";
 type Schema = OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
-type FromSchemaNodeProperty = Pick<INodeProperties, "type" | "default" | "description" | "options" | "typeOptions">;
+type FromSchemaNodeProperty = Pick<INodeProperties, "type" | "default" | "description" | "options">;
 /**
  * One level deep - meaning only top fields of the schema
  * The rest represent as JSON string
